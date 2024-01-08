@@ -25,5 +25,5 @@ int main()
     }
     i64 diff = dp[0][M];
     i64 tot = std::accumulate(L.begin(),L.end(),0ll);
-    std::cout << (tot+diff)/2 << " " << (tot-diff)/2 << "\n";
+    std::cout << (tot+diff)/2ll << " " << (tot-diff)/2ll << "\n";
 }
