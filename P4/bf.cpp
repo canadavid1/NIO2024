@@ -49,40 +49,23 @@ int main()
     for(auto && i : fly) std::cin >> i.first >> i.second;
     v<p<int,int>> tog(K);
     for(auto && i : tog) std::cin >> i.first >> i.second;
-    int m = 1;
-    while (m <= N) m <<= 1;
-    int TOTM = m;
-    tog.resize(TOTM+1,{0,0});
-    m >>= 1;
-    v<p<int,int>> flytime;
-    flytime.reserve(M);
-    for(int i = 0; i < M; i++) flytime.push_back({i,m});
-    m >>= 1;
-    for(;m > 0; m>>=1)
+    
+    unionfind uf(N);
+    for(auto[a,b] : tog)
     {
-        unionfind uf(N);
-        v<p<int,int>> flytime2;
-        flytime2.reserve(M);
-        int k = 0;
-        for(int i = 0; k < flytime.size(); i++)
+        uf.unite(a,b);
+        int ct = 0;
+        for(int i = 0; i < fly.size(); i++)
         {
-            v<p<int,int>> up;
-            while(k < flytime.size() && flytime[k].second == i)
+            if (uf.connected(fly[i].first,fly[i].second))
             {
-                auto[a,b] = fly[flytime[k].first];
-                if(uf.connected(a,b))
-                    flytime2.push_back({flytime[k].first,flytime[k].second-m});
-                else
-                    up.push_back({flytime[k].first,flytime[k].second+m});
-                k += 1;
+                ct++;
+                if (i <  fly.size()-1) std::swap(fly[i],fly.back());
+                fly.pop_back();
+                i--;
             }
-            for(auto & j : up) flytime2.push_back(j);
-            uf.unite(tog[i].first,tog[i].second);
         }
-        flytime = std::move(flytime2);
+        std::cout << ct << "\n";
     }
-    v<int> ct(TOTM,0);
-    for(auto i : flytime) ct[i.second]++;
-    for(int i = 0; i <K; i++) std::cout << ct[i] << "\n";
     
 }
