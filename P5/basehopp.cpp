@@ -31,7 +31,6 @@ struct sparsetable
         for(int i = 0; data.back().size() > (1<<i); i++)
         {
             data.push_back({});
-            data[i+1].reserve(data[i].size()-(1<<i)+2);
             for(int k = 0; k + (1<<i) < data[i].size(); k++)
             {
                 data[i+1].push_back(max(data[i][k],data[i][k+(1<<i)]));
@@ -51,6 +50,7 @@ struct sparsetable
 
 int main()
 {
+    std::cin.tie(nullptr)->sync_with_stdio(false);
     it N,M;
     std::cin >> N >> M;
     v<it> y(N);
